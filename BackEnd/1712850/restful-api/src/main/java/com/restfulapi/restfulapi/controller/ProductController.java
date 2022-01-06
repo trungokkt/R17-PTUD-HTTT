@@ -25,7 +25,12 @@ public class ProductController {
 	public List<Product> getAllProducts(
 			@RequestParam(name = "sort", required = false, defaultValue = "DESC") String sort,
 			@RequestParam(name = "ColumSort",defaultValue = "createdDate") String ColumSort,
-			@RequestParam(name = "page", required = false, defaultValue = "0") Integer page) {
+			@RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
+			@RequestParam(name = "storeid", required = false) Integer StoreId) {
+		if(StoreId != null) {
+			return ProductRepository.findProductByStore(StoreId);
+		}
+		
 		Sort sortable = null;
 		if (sort.equals("ASC")) {
 			sortable = Sort.by(ColumSort).ascending();
@@ -37,12 +42,19 @@ public class ProductController {
 		
 		Pageable pageable = PageRequest.of(page, limit, sortable);
 		return ProductRepository.findAllMore(pageable);
-	}
-	
-	
-	
-	@GetMapping("products/{id}")
-	public Optional<Product>  getProductDetail(@PathVariable int id) {
-		return ProductRepository.findById(id);
-	}
+		}
+		@GetMapping("products/{id}")
+		public Optional<Product>  getProductDetail(@PathVariable int id) {
+			return ProductRepository.findById(id);
+		}
+//	@GetMapping("productss")
+//	public List<Product> getStoreNear(
+//			@RequestParam(name = "StoreId", required = false, defaultValue = "1") Integer StoreId) {
+//		return ProductRepository.findProductByStore(StoreId);
+//	}
+//	@GetMapping("productstest")
+//	public List<Product> productstest(
+//			@RequestParam(name = "StoreId", required = false, defaultValue = "996") String adress) {
+//		return ProductRepository.findTopProductEachStore(adress);
+//	}
 }
