@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,20 +18,9 @@ public class ProductTypeController {
 	@Autowired
 	private ProductTypeRepository ProductTypeRepository;
 	
-	@GetMapping("producttype")
-	public List<ProductType> getAllProducts() {
-		return ProductTypeRepository.getProductTypeJoinProduct();
-//		Sort sortable = null;
-//		if (sort.equals("ASC")) {
-//			sortable = Sort.by(ColumSort).ascending();
-//		}
-//		if (sort.equals("DESC")) {
-//		    sortable = Sort.by(ColumSort).descending();
-//		}
-//		Integer limit = 5;
-//		
-//		Pageable pageable = PageRequest.of(page, limit, sortable);
-//		return ProductRepository.findAllMore(pageable);
+	@GetMapping("producttype/{StoreId}")
+	public List<ProductType> getAllProductType (@PathVariable Integer StoreId) {
+		return ProductTypeRepository.getProductTypeByStore(StoreId);
 	}
-	
+
 }

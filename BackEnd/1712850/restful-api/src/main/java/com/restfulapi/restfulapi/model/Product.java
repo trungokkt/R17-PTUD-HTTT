@@ -1,5 +1,6 @@
 package com.restfulapi.restfulapi.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -14,7 +15,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="Product")
-public class Product {
+public class Product implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="productid",nullable = false,columnDefinition = "int")
@@ -27,10 +33,10 @@ public class Product {
 	private String productDescription;
 	
 	@Column(name="productprice",nullable = true,columnDefinition = "int")
-	private int productPrice;
+	private Integer productPrice;
 	
 	@Column(name="productinventory",nullable = true,columnDefinition = "int")
-	private int productInventory;
+	private Integer productInventory;
 	
 	@Column(name="productunit")
 	private String productUnit;
@@ -40,6 +46,9 @@ public class Product {
 	
 	@Column(name="updateddate", nullable = true, columnDefinition = "datetime")
 	private Date updatedDate; 
+	
+	@Column(name="productimage", nullable = true, columnDefinition = "nvarchar(MAX)")
+	private String productImage; 
 	
 	@OneToOne
 	@JoinColumn(name = "Producttypeid")
@@ -69,19 +78,19 @@ public class Product {
 		this.productDescription = productDescription;
 	}
 
-	public int getProductPrice() {
+	public Integer getProductPrice() {
 		return productPrice;
 	}
 
-	public void setProductPrice(int productPrice) {
+	public void setProductPrice(Integer productPrice) {
 		this.productPrice = productPrice;
 	}
 
-	public int getProductInventory() {
+	public Integer getProductInventory() {
 		return productInventory;
 	}
 
-	public void setProductInventory(int productInventory) {
+	public void setProductInventory(Integer productInventory) {
 		this.productInventory = productInventory;
 	}
 
@@ -115,6 +124,14 @@ public class Product {
 
 	public void setProductType(ProductType productType) {
 		ProductType = productType;
+	}
+
+	public String getProductImage() {
+		return productImage;
+	}
+
+	public void setProductImage(String productImage) {
+		this.productImage = productImage;
 	}
 	
 }
